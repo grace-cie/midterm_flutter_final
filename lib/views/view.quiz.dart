@@ -61,14 +61,17 @@ class _MainViewState extends State<MainView> {
     final calculatorCtrl = Get.put(Calc());
 
     var size = MediaQuery.of(context).size;
+
     final _num1 = TextEditingController();
     final _num2 = TextEditingController();
     final _tot = TextEditingController();
+
     late int result;
-    late int sum;
+    // late int sum;
 
     // ignore: non_constant_identifier_names
-    GetStrings() {
+    GetStrings(String opt) {
+      calculatorCtrl.opt = opt;
       calculatorCtrl.num1 = int.parse(_num1.text);
       calculatorCtrl.num2 = int.parse(_num2.text);
     }
@@ -130,124 +133,156 @@ class _MainViewState extends State<MainView> {
               const SizedBox(
                 height: 15,
               ),
-              Row(),
-              GestureDetector(
-                onTap: () {
-                  GetStrings();
-                  GetTotal();
-                  ResultToString();
-                  calculatorCtrl.calculateAddResult();
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          GetStrings('+');
+                          GetTotal();
+                          ResultToString();
+                          // calculatorCtrl.calculateAddResult();
+                          // calculatorCtrl.opt = '+';
+                          calculatorCtrl.calculator();
 
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Second()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Second()));
 
-                  // print('hello');
-                  // print('$result');
+                          // print('hello');
+                          // print('$result');
 
-                  // sum = int.parse(_num1.text) + int.parse(_num2.text);
-                  // result = sum;
-                  // _tot.text = result.toString();
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: size.height / 14,
-                  width: size.width / 30,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: const Text(
-                    "+",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                          // sum = int.parse(_num1.text) + int.parse(_num2.text);
+                          // result = sum;
+                          // _tot.text = result.toString();
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: size.height / 14,
+                          width: size.width / 10,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: const Text(
+                            "+",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  GetStrings();
-                  GetTotal();
-                  ResultToString();
-                  calculatorCtrl.calculateSubResult();
+                  Expanded(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          GetStrings('-');
+                          GetTotal();
+                          ResultToString();
 
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Second()));
-                  // sum = int.parse(_num1.text) - int.parse(_num2.text);
-                  // result = sum;
-                  // _tot.text = result.toString();
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => Second('$result')));
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: size.height / 14,
-                  width: size.width / 30,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: const Text(
-                    "-",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  GetStrings();
-                  GetTotal();
-                  ResultToString();
-                  calculatorCtrl.calculateMulResult();
+                          // calculatorCtrl.opt = '-';
+                          calculatorCtrl.calculator();
 
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Second()));
-                  // sum = int.parse(_num1.text) * int.parse(_num2.text);
-                  // result = sum;
-                  // _tot.text = result.toString();
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => Second('$result')));
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: size.height / 14,
-                  width: size.width / 30,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: const Text(
-                    "X",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Second()));
+                          // sum = int.parse(_num1.text) - int.parse(_num2.text);
+                          // result = sum;
+                          // _tot.text = result.toString();
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => Second('$result')));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: size.height / 14,
+                          width: size.width / 10,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: const Text(
+                            "-",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  GetStrings();
-                  GetTotal();
-                  ResultToString();
-                  calculatorCtrl.calculateDivResult();
+                  Expanded(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          GetStrings('*');
+                          GetTotal();
+                          ResultToString();
 
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Second()));
-                  // sum = int.parse(_num1.text) ~/ int.parse(_num2.text);
-                  // result = sum;
-                  // _tot.text = result.toString();
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => Second('$result')));
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: size.height / 14,
-                  width: size.width / 30,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: const Text(
-                    "/",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                          // calculatorCtrl.opt = '*';
+                          calculatorCtrl.calculator();
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Second()));
+                          // sum = int.parse(_num1.text) * int.parse(_num2.text);
+                          // result = sum;
+                          // _tot.text = result.toString();
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => Second('$result')));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: size.height / 14,
+                          width: size.width / 10,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: const Text(
+                            "X",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          GetStrings('/');
+                          GetTotal();
+                          ResultToString();
+
+                          // calculatorCtrl.opt = '/';
+                          calculatorCtrl.calculator();
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Second()));
+                          // sum = int.parse(_num1.text) ~/ int.parse(_num2.text);
+                          // result = sum;
+                          // _tot.text = result.toString();
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => Second('$result')));
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: size.height / 14,
+                          width: size.width / 10,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: const Text(
+                            "/",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ],
           ),

@@ -19,8 +19,8 @@ class SecondState extends State<Second> {
   // SecondState(this.result);
   @override
   Widget build(BuildContext context) {
-    var result = calcfind.total;
-    var fresult = result.toString();
+    var fresult = calcfind.total.toString();
+    // var fresult = result;
     return Scaffold(
       // appBar: AppBar(
       //   //now you have passing variable
